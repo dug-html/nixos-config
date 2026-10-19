@@ -102,7 +102,28 @@
   };
 
   programs = {
-    dwl.enable = true;
+    dwl = {
+      enable = true;
+      package = pkgs.dwl.override {
+        configH = ./dwl.h;
+      };
+      # example override for a patch
+      /*
+          .overrideAttrs (oldAttrs: {
+        buildInputs =
+          oldAttrs.buildInputs or []
+          ++ [
+            pkgs.libdrm
+            pkgs.fcft
+          ];
+        patches =
+          oldAttrs.patches or []
+          ++ [
+            ./bar-0.7.patch
+          ];
+      });
+      */
+    };
 
     # Install firefox.
     firefox.enable = true;
