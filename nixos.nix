@@ -2,7 +2,9 @@
   inputs,
   pkgs,
   ...
-}: {
+}: let
+  orbit = pkgs.callPackage ./orbit.nix {};
+in {
   boot = {
     # Use latest kernel.
     kernelPackages = pkgs.linuxPackages_latest;
@@ -188,6 +190,11 @@
     wayland
     st
     gh
+    orbit
+    thunar
+    grim
+    slurp
+    wl-clipboard
   ];
 
   # Some programs need SUID wrappers, can be configured further or are

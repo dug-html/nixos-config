@@ -48,7 +48,6 @@ nixpkgs = "nixpkgs"
 
 [inputs.nixpkgs]
 url = "https://channels.nixos.org/nixos-unstable/nixexprs.tar.zst"
-type = "fetch"
 [inputs.hjem]
 url = "github:feel-co/hjem"
 [inputs.nvf]
