@@ -5,8 +5,9 @@ in
     system = "x86_64-linux";
     specialArgs = {inherit inputs;};
     modules = [
-      ./nixos.nix
       ./hardware.nix
+      ./hjem.nix
+      ./nixos.nix
       ./nvim.nix
     ];
   }
