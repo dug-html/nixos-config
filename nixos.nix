@@ -1,16 +1,14 @@
-# Edit this configuration file to define what should be installed on
-# your system. Help is available in the configuration.nix(5) man page, on
-# https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
+{pkgs, ...}: {
+  boot = {
+    # Use latest kernel.
+    kernelPackages = pkgs.linuxPackages_latest;
 
-{ config, pkgs, ... }:
-
-{
-  # Use the systemd-boot EFI boot loader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-
-  # Use latest kernel.
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+    # Use the systemd-boot EFI boot loader.
+    loader = {
+      systemd-boot.enable = true;
+      efi.canTouchEfiVariables = true;
+    };
+  };
 
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -40,58 +38,104 @@
     LC_TIME = "fr_FR.UTF-8";
   };
 
-  # Enable the X11 windowing system.
-  services.xserver.enable = true;
+  services = {
+    # Enable flatpak.
+    flatpak.enable = true;
 
-  # Enable the Cinnamon Desktop Environment.
-  services.xserver.displayManager.lightdm.enable = true;
-  services.xserver.desktopManager.cinnamon.enable = true;
+    # Enable CUPS to print documents.
+    printing.enable = true;
 
-  # Configure keymap in X11
-  services.xserver.xkb = {
-    layout = "fr";
-    variant = "";
+    # Enable sound with pipewire.
+    pulseaudio.enable = false;
+    pipewire = {
+      enable = true;
+      alsa.enable = true;
+      alsa.support32Bit = true;
+      pulse.enable = true;
+      # If you want to use JACK applications, uncomment this
+      # jack.enable = true;
+    };
+
+    # Enable the X11 windowing system.
+    xserver = {
+      enable = true;
+
+      # Enable the Cinnamon Desktop Environment.
+      displayManager.lightdm.enable = true;
+      desktopManager.cinnamon.enable = true;
+
+      # Configure keymap in X11
+      xkb = {
+        layout = "fr";
+        variant = "";
+      };
+    };
   };
 
   # Configure console keymap
   console.keyMap = "fr";
 
-  # Enable CUPS to print documents.
-  services.printing.enable = true;
-
-  # Enable sound with pipewire.
-  services.pulseaudio.enable = false;
   security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-    # If you want to use JACK applications, uncomment this
-    # jack.enable = true;
-  };
-
-# Enable flatpak.
-services.flatpak.enable = true;
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users."saturn" = {
-    isNormalUser = true;
-    description = "Saturn";
-    extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs; [
-    #  thunderbird
-    ];
+  users = {
+    groups.saturn.gid = 1000;
+    users.saturn = {
+      description = "Saturn";
+      extraGroups = ["networkmanager" "wheel"];
+      group = "saturn";
+      isNormalUser = true;
+      linger = true;
+      shell = pkgs.zsh;
+      uid = 1000;
+      packages = with pkgs; [
+        #  thunderbird
+      ];
+    };
   };
 
-  # Install firefox.
-  programs.firefox.enable = true;
+  programs = {
+    dwl.enable = true;
+
+    # Install firefox.
+    firefox.enable = true;
+    nh = {
+      enable = true;
+      clean = {
+        enable = true;
+        extraArgs = "--keep-since 4d --keep 10";
+      };
+    };
+    zsh = {
+      enable = true;
+      shellAliases.nrs = "nh os switch -f /etc/nixos/system.nix";
+    };
+  };
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
+  nix = {
+    channel.enable = false;
+    settings = {
+      auto-allocate-uids = true;
+      auto-optimise-store = true;
+      use-cgroups = true;
+      experimental-features = [
+        "auto-allocate-uids"
+        "cgroups"
+        "flakes"
+        "nix-command"
+      ];
+      trusted-users = [
+        "root"
+        "@wheel"
+      ];
+      use-xdg-base-directories = true;
+    };
+  };
 
   # List packages installed in system profile.
   # You can use https://search.nixos.org/ to find more packages (and options).
@@ -99,29 +143,21 @@ services.flatpak.enable = true;
   #   vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
   #   wget
   # ];
-# Packages stuff.
-environment.systemPackages = with pkgs; [
-  kitty
-  neovim
-  git
-  gnumake
-  dwl
-  fastfetch
-  foot
-  wmenu
-  starship
-  cmake
-  wayland
-  st
-  gh
-];
-
-programs.dwl.enable = true;
-
-programs.zsh.enable = true;
-users.extraUsers.saturn = {
-  shell = pkgs.zsh;
-};
+  # Packages stuff.
+  environment.systemPackages = with pkgs; [
+    kitty
+    neovim
+    git
+    gnumake
+    fastfetch
+    foot
+    wmenu
+    starship
+    cmake
+    wayland
+    st
+    gh
+  ];
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -165,5 +201,4 @@ users.extraUsers.saturn = {
   #
   # For more information, see `man configuration.nix` or https://nixos.org/manual/nixos/stable/options#opt-system.stateVersion .
   system.stateVersion = "26.05"; # Did you read the comment?
-
 }
