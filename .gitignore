@@ -1,0 +1,8 @@
+*.qcow2
+.direnv
+.jj
+.ndg-cache/
+build
+flake.lock
+result
+result-*
