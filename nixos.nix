@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  inputs,
+  pkgs,
+  ...
+}: {
   boot = {
     # Use latest kernel.
     kernelPackages = pkgs.linuxPackages_latest;
@@ -135,6 +139,13 @@
       ];
       use-xdg-base-directories = true;
     };
+
+    # flakeless specifics
+    registry.nixpkgs.to = {
+      type = "path";
+      path = "${inputs.nixpkgs}";
+    };
+    nixPath = ["nixpkgs=${inputs.nixpkgs}"];
   };
 
   # List packages installed in system profile.
