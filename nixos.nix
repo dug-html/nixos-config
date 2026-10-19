@@ -157,7 +157,6 @@
   # Packages stuff.
   environment.systemPackages = with pkgs; [
     kitty
-    neovim
     git
     gnumake
     fastfetch

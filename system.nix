@@ -7,5 +7,6 @@ in
     modules = [
       ./nixos.nix
       ./hardware.nix
+      ./nvim.nix
     ];
   }
