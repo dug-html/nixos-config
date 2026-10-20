@@ -195,6 +195,8 @@ in {
     grim
     slurp
     wl-clipboard
+    steam
+    hyprland
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
