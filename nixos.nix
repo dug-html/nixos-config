@@ -110,7 +110,6 @@ in {
       xwayland.enable = true;
     };
     uwsm.enable = true;
-    hyprland.enable = true;
     dwl = {
       enable = true;
       package = pkgs.dwl.override {
