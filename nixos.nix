@@ -1,3 +1,4 @@
+programs.hyprland.enable
 {
   inputs,
   pkgs,
