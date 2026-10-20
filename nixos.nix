@@ -1,4 +1,3 @@
-programs.hyprland.enable
 {
   inputs,
   pkgs,
@@ -105,6 +104,13 @@ in {
   };
 
   programs = {
+    hyprland = {
+      enable = true;
+      withUWSM = true;
+      xwayland.enable = true;
+    };
+    uwsm.enable = true;
+    hyprland.enable = true;
     dwl = {
       enable = true;
       package = pkgs.dwl.override {
