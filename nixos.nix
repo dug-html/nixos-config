@@ -83,7 +83,15 @@ in {
 
   security.rtkit.enable = true;
 
-  # Enable touchpad support (enabled default in most desktopManager).
+  fonts.packages = with pkgs; [
+    hack-font
+    fira-code
+    noto-fonts
+    comfortaa
+    nerd-fonts.symbols-only
+    noto-fonts-color-emoji
+    twemoji-color-font
+  ]; # Enable touchpad support (enabled default in most desktopManager).
   # services.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
@@ -102,7 +110,10 @@ in {
       ];
     };
   };
-
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+  };
   programs = {
     hyprland = {
       enable = true;
@@ -185,6 +196,9 @@ in {
   # ];
   # Packages stuff.
   environment.systemPackages = with pkgs; [
+    cbonsai
+    btop
+    cmatrix
     kitty
     git
     gnumake
@@ -203,6 +217,14 @@ in {
     wl-clipboard
     steam
     hyprland
+    waybar
+    swaybg
+    yazi
+    tack
+    dunst
+    inputs.fetch.packages.${pkgs.stdenv.hostPlatform.system}.default
+    hyprshot
+    prismlauncher
   ];
 
   # Some programs need SUID wrappers, can be configured further or are

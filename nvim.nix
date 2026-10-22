@@ -66,10 +66,10 @@
       tabline.nvimBufferline.enable = true;
       telescope.enable = true;
       theme = {
-        enable = true;
+        enable = false;
         name = "catppuccin";
         style = "mocha";
-        transparent = true;
+        transparent = false;
       };
       treesitter = {
         enable = true;

@@ -4,6 +4,14 @@
     "nixpkgs": "https://channels.nixos.org/nixos-unstable/nixexprs.tar.zst",
     "nvf": "github:notashelf/nvf"
   },
+  "fetch": {
+    "type": "github",
+    "owner": "areofyl",
+    "repo": "fetch",
+    "rev": "e3087810e2a131ed4093440e783ac96a101ad806",
+    "narHash": "sha256-hgoTIBD2pvZDJxefMz+g8ALs4lqsMHOPHH4wwiomsaA=",
+    "lastModified": 1791855008
+  },
   "hjem": {
     "type": "github",
     "owner": "feel-co",
@@ -14,17 +22,16 @@
   },
   "nixpkgs": {
     "type": "tarball",
-    "url": "https://releases.nixos.org/nixos/unstable/nixos-26.11pre1093333.fe13242281a6/nixexprs.tar.zst?rev=fe13242281a67641c0102cdb1087f0ebe586c7df&lastModified=1792094642",
-    "rev": "fe13242281a67641c0102cdb1087f0ebe586c7df",
-    "narHash": "sha256-LPFRbrCWWyNsdQLO3SX1B/5UMkFK0hfe7bZR6lENvpc=",
-    "lastModified": 1792094642
+    "url": "https://releases.nixos.org/nixos/unstable/nixos-26.11pre1095516.09063bd1f2b3/nixexprs.tar.zst",
+    "rev": "09063bd1f2b36fd9fd793c36dfade7bd40a93dfc",
+    "narHash": "sha256-EFOYkCb5ZNtbPx1NInawzi4y/6JRdHia0ag0CbJoMNY="
   },
   "nvf": {
     "type": "github",
     "owner": "notashelf",
     "repo": "nvf",
-    "rev": "a736b60b1e2019931168979951c94dc46e342957",
-    "narHash": "sha256-XD64JVLV8iE4lR+W5gkTweEaT+SBwOrSy0+le2WgITI=",
-    "lastModified": 1792175215
+    "rev": "1d1a8c826837858404292e9336977f0d9131fb9b",
+    "narHash": "sha256-tQPke0OIaFboQjxQPJL7a+pNzH1ZH1qQif046uo9Rf4=",
+    "lastModified": 1792450766
   }
 }
