@@ -4,6 +4,28 @@
 
 { config, pkgs, ... }:
 
+ {
+# 1. Enable modern kernel and ensure correct video driver
+boot.initrd.kernelModules = [ "i915" ]; # Or "xe" if experimenting with the experimental Xe driver on newer kernels
+services.xserver.videoDrivers = [ "modesetting" ]};
+
+# 2. Configure the graphics hardware stack
+hardware.graphics = {
+enable = true;
+enable32Bit = true; # Highly recommended if you intend to use Steam or 32-bit apps
+extraPackages = with pkgs; [
+intel-media-driver # VA-API (iHD) driver for hardware video decode/encode
+vpl-gpu-rt # Intel oneVPL runtime for modern Quick Sync Video (QSV)
+intel-compute-runtime # OpenCL and Level Zero for compute tasks
+];
+};
+
+# 3. Explicitly force the system to use the modern iHD driver
+environment.sessionVariables = {
+LIBVA_DRIVER_NAME = "iHD";
+};
+}
+
 {
   imports =
     [ # Include the results of the hardware scan.
